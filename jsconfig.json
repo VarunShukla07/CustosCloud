@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".", // This line is important to make the paths relative to the project root
     "paths": {
       "@/*": ["./*"]
     }

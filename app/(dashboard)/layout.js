@@ -1,12 +1,27 @@
-import React from 'react'
+"use client";
+import React, { useState } from 'react';
+import SideNav from './_components/SideNav';
+import TopHeader from './_components/TopHeader';
 
-const layout = ({children}) => {
+const Layout = ({ children }) => {
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div>
-        <h2>Routing Setup</h2>
-      {children}
+    <div className='flex'>
+      
+      <SideNav isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <div className='flex-1 md:ml-64'>
+        <TopHeader toggleSidebar={toggleSidebar} />
+        <div className='p-4'>
+          {children}
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default layout
+export default Layout;

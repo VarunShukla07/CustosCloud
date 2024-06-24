@@ -14,7 +14,8 @@ module.exports = {
       },
       colors:{
         diffblue : "#4C3BCF",
-        diffblue2 : "#FFBF00"
+        diffblue2 : "#FFBF00",
+        slightwhite : "#FFFED3"
       }
     },
   },

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import SideNav from './_components/SideNav';
 import TopHeader from './_components/TopHeader';
+import Upload from './(routes)/upload/page';
 
 const Layout = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -17,6 +18,7 @@ const Layout = ({ children }) => {
       <div className='flex-1 md:ml-64'>
         <TopHeader toggleSidebar={toggleSidebar} />
         <div className='p-4'>
+          <Upload/>
           {children}
         </div>
       </div>

@@ -19,7 +19,7 @@ const Hero = () => {
                         <div className="mt-8 flex flex-wrap justify-center gap-4">
                             <a
                                 className="block w-full rounded bg-diffblue px-12 py-3 text-sm font-medium text-white shadow transition-transform transform hover:scale-105 hover:bg-diffblue2 focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
-                                href="/files"
+                                href="/upload"
                             >
                                 Get Started
                             </a>

@@ -18,7 +18,6 @@ const Layout = ({ children }) => {
       <div className='flex-1 md:ml-64'>
         <TopHeader toggleSidebar={toggleSidebar} />
         <div className='p-4'>
-          <Upload/>
           {children}
         </div>
       </div>

@@ -7,13 +7,17 @@ import { doc, setDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useUser } from '@clerk/nextjs';
 import { generaterandomstring } from '@/app/_utils/GenerateRandomString';
+import { useRouter } from 'next/navigation';
 
 const Upload = () => {
-  const {user} = useUser();
+  const { user } = useUser();
   const [progress, setProgress] = useState();
   const [alertVisible, setAlertVisible] = useState(false);
   const storage = getStorage(app);
+  const router = useRouter();
+  const [fileDocId, setFileDocId] = useState();
   const db = getFirestore(app);
+
   const uploadfile = (file) => {
     const metadata = {
       contentType: file.type
@@ -33,26 +37,34 @@ const Upload = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log('File available at', downloadURL);
-          saveinfo(file,downloadURL)
+          const docid = saveinfo(file, downloadURL);
+          setFileDocId(docid);
           setAlertVisible(true); // Show alert on successful upload
+          setTimeout(() => {
+            setAlertVisible(false);
+            router.push(`/file-preview/${docid}`);
+          }, 2000);
         });
       }
     );
   };
-  const saveinfo=(file,fileUrl)=>{
+
+  const saveinfo = (file, fileUrl) => {
     const docid = generaterandomstring().toString();
     setDoc(doc(db, "uploadedFile", docid), {
-      fileName:file?.name,
-      fileSize:file?.size,
-      fileType:file?.type,
-      fileUrl:fileUrl,
-      userEmail:user?.primaryEmailAddress.emailAddress,
-      userName:user?.fullName,
-      password:'',
-      id:docid,
-      shortUrl:process.env.NEXT_PUBLIC_BASE_URL+generaterandomstring()
+      fileName: file?.name,
+      fileSize: file?.size,
+      fileType: file?.type,
+      fileUrl: fileUrl,
+      userEmail: user?.primaryEmailAddress.emailAddress,
+      userName: user?.fullName,
+      password: '',
+      id: docid,
+      shortUrl: process.env.NEXT_PUBLIC_BASE_URL + generaterandomstring()
     });
-  }
+    return docid;
+  };
+
   const dismissAlert = () => {
     setAlertVisible(false);
   };

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { getFirestore, updateDoc } from "firebase/firestore";
-import { app } from '@/firebaseConfig';
+import { app } from './../../../../../firebaseConfig';
 import { doc, getDoc } from "firebase/firestore"
 import { ArrowLeftSquare, Link } from 'lucide-react';
 import FileInfo from './_componenets/FileInfo';

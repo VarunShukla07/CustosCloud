@@ -1,12 +1,12 @@
 "use client"
 import React, { useState } from 'react'
 import UploadForm from './_components/UploadForm'
-import { app } from '@/firebaseConfig'
+import { app } from './../../../../firebaseConfig'
 import { getFirestore } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore"; 
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useUser } from '@clerk/nextjs';
-import { generaterandomstring } from '@/app/_utils/GenerateRandomString';
+import { generaterandomstring } from './../../../_utils/GenerateRandomString';
 import { useRouter } from 'next/navigation';
 
 const Upload = () => {

@@ -1,10 +1,9 @@
-"use client"
-import React, { useState } from 'react'
-import UploadForm from './_components/UploadForm'
-import { app } from './../../../../firebaseConfig'
-import { getFirestore } from "firebase/firestore";
-import { doc, setDoc } from "firebase/firestore"; 
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+"use client";
+import React, { useState } from 'react';
+import UploadForm from './_components/UploadForm';
+import { app } from './../../../../firebaseConfig';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { useUser } from '@clerk/nextjs';
 import { generaterandomstring } from './../../../_utils/GenerateRandomString';
 import { useRouter } from 'next/navigation';
@@ -37,32 +36,37 @@ const Upload = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log('File available at', downloadURL);
-          const docid = saveinfo(file, downloadURL);
-          setFileDocId(docid);
-          setAlertVisible(true); // Show alert on successful upload
-          setTimeout(() => {
-            setAlertVisible(false);
-            router.push(`/file-preview/${docid}`);
-          }, 2000);
+          const docid = generaterandomstring().toString();
+          const shortUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/f/${docid}`; // Generate short URL with fileId
+          
+          const docData = {
+            fileName: file?.name,
+            fileSize: file?.size,
+            fileType: file?.type,
+            fileUrl: downloadURL,
+            userEmail: user?.primaryEmailAddress.emailAddress,
+            userName: user?.fullName,
+            password: '',
+            id: docid,
+            shortUrl: shortUrl
+          };
+
+          setDoc(doc(db, 'uploadedFile', docid), docData)
+            .then(() => {
+              console.log('Document successfully written!');
+              setFileDocId(docid);
+              setAlertVisible(true); // Show alert on successful upload
+              setTimeout(() => {
+                setAlertVisible(false);
+                router.push(`/file-preview/${docid}`);
+              }, 2000);
+            })
+            .catch((error) => {
+              console.error('Error writing document: ', error);
+            });
         });
       }
     );
-  };
-
-  const saveinfo = (file, fileUrl) => {
-    const docid = generaterandomstring().toString();
-    setDoc(doc(db, "uploadedFile", docid), {
-      fileName: file?.name,
-      fileSize: file?.size,
-      fileType: file?.type,
-      fileUrl: fileUrl,
-      userEmail: user?.primaryEmailAddress.emailAddress,
-      userName: user?.fullName,
-      password: '',
-      id: docid,
-      shortUrl: process.env.NEXT_PUBLIC_BASE_URL + generaterandomstring()
-    });
-    return docid;
   };
 
   const dismissAlert = () => {

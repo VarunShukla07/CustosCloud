@@ -69,7 +69,7 @@ function FileShareInfo({ file,onPasswordSave }) {
                  className='disabled:text-gray-500 bg-transparent
                  outline-none' onChange={(e)=>setPassword(e.target.value)}/>
             </div>
-            <button className='p-2 bg-primary text-white
+            <button className='p-2 bg-diffblue text-white
                 rounded-md disabled:bg-gray-300 hover:bg-blue-600' 
                 disabled={password?.length<3}
                 onClick={()=>onPasswordSave(password)}

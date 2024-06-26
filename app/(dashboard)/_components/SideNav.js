@@ -1,5 +1,5 @@
 "use client";
-import { Shield, File, Upload } from 'lucide-react';
+import { Shield, File, Upload, User } from 'lucide-react';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'; // Import useRouter from next/router
@@ -22,8 +22,8 @@ function SideNav({ isOpen, toggleSidebar }) {
         },
         {
             id: 3,
-            name: 'Upgrade',
-            icon: Shield,
+            name: 'Account Setting',
+            icon: User,
             path: '/upgrade'
         },
     ];
